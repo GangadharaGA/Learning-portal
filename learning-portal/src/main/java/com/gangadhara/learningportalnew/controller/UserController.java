@@ -119,4 +119,17 @@ public class UserController {
 		return userService.seeFavouriteCourses(userId);
 	}
 
+	@GetMapping("/login_01")
+	public String login(@RequestBody LogInEntity log) {
+		//finding the user
+		UserEntity user=userService.findByusername(log.getUsername());
+		
+		//if user exists
+		if(user!=null && BCrypt.checkpw(log.getPassword(), user.getPassword())) {
+			return "Successfully loggedIn";
+		}
+		
+		return "Null";
+	}
+
 }
